@@ -1,5 +1,7 @@
 arch:
   - ppc64le
+  - amd64
+  - s390x
 
 cache:
   directories:

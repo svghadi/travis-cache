@@ -3,9 +3,9 @@ arch:
 
 cache:
   directories:
-  - $HOME/cache.txt
+  - $HOME/cache
   
 script:
-  - cat $HOME/cache.txt
-  - echo "cached file" >> $HOME/cache.txt
-  - cat $HOME/cache.txt 
+  - cat $HOME/cache/test.txt
+  - echo "cached file" >> $HOME/cache/test.txt
+  - cat $HOME/cache/test.txt 

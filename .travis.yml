@@ -1,9 +1,11 @@
 arch:
   - ppc64le
 
-
+cache:
+  directories:
+  - $HOME/cache.txt
   
- script:
+script:
   - cat $HOME/cache.txt
   - echo "cached file" >> $HOME/cache.txt
   - cat $HOME/cache.txt 

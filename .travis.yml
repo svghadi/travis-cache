@@ -3,11 +3,17 @@ arch:
   - amd64
   - s390x
 
+dist: bionic
+
 cache:
   directories:
   - $HOME/cache
+  - $HOME/.cache/pip/wheels
   
 script:
   - cat $HOME/cache/test.txt
   - echo "cached file" >> $HOME/cache/test.txt
   - cat $HOME/cache/test.txt 
+  - python --version
+  - pip install -U pip wheel
+  - pip --version

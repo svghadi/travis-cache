@@ -1,6 +1,6 @@
 dist: focal
 os: linux
-
+arch: ppc64le
 env:
   global:
     - MINIKUBE_VERSION=v1.18.1
@@ -14,7 +14,6 @@ jobs:
     - &docker-build
       stage: Build images
       name: Docker build (Alpine) on amd64
-      arch: amd64
       env: DIST=alpine CHECTL_CHANNEL=next
       install: skip
       script:
@@ -24,15 +23,12 @@ jobs:
         cat $HOME/cache/test.txt 
     - <<: *docker-build
       name: Docker build (Alpine) on amd64
-      arch: amd64
       env: DIST=alpine CHECTL_CHANNEL=stable
     - <<: *docker-build
       name: Docker build (ubi8) on amd64
-      arch: amd64
       env: DIST=ubi8 CHECTL_CHANNEL=next
     - <<: *docker-build
-      name: Docker build (ubi8) on amd64
-      arch: amd64
+      name: Docker build (ubi8) on amd644
       env: DIST=ubi8 CHECTL_CHANNEL=stable
     #happy-path
     - &happy-path
@@ -41,7 +37,6 @@ jobs:
       install: skip
       env:
         - DIST=alpine CHECTL_CHANNEL=next
-      arch: amd64
       script: cat $HOME/cache/test.txt 
     - <<: *happy-path
       name: happy-path (alpine, stable)

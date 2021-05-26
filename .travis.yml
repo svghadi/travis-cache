@@ -1,5 +1,10 @@
 dist: focal
 os: linux
+
+env:
+  global:
+    - MINIKUBE_VERSION=v1.18.1
+
 cache:
   directories:
   - $HOME/cache
@@ -10,7 +15,7 @@ jobs:
       stage: Build images
       name: Docker build (Alpine) on amd64
       arch: amd64
-      env: DIST=alpine
+      env: DIST=alpine CHECTL_CHANNEL=next
       install: skip
       script:
       - |
@@ -18,35 +23,33 @@ jobs:
         echo "$DIST" >> $HOME/cache/test.txt
         cat $HOME/cache/test.txt 
     - <<: *docker-build
+      name: Docker build (Alpine) on amd64
+      arch: amd64
+      env: DIST=alpine CHECTL_CHANNEL=stable
+    - <<: *docker-build
       name: Docker build (ubi8) on amd64
       arch: amd64
-      env: DIST=ubi8
+      env: DIST=ubi8 CHECTL_CHANNEL=next
+    - <<: *docker-build
+      name: Docker build (ubi8) on amd64
+      arch: amd64
+      env: DIST=ubi8 CHECTL_CHANNEL=stable
     #happy-path
     - &happy-path
       stage: Run tests
       name: happy-path (alpine, next)
       install: skip
       env:
-        - DIST=alpine
-        - CHECTL_CHANNEL=next
-        - MINIKUBE_VERSION=v1.18.1
+        - DIST=alpine CHECTL_CHANNEL=next
       arch: amd64
       script: cat $HOME/cache/test.txt 
     - <<: *happy-path
       name: happy-path (alpine, stable)
       env:
-        - DIST=alpine
-        - CHECTL_CHANNEL=stable
-        - MINIKUBE_VERSION=v1.18.1
+        - DIST=alpine CHECTL_CHANNEL=stable
     - <<: *happy-path
       name: happy-path (ubi8, next)
-      env:
-      - DIST=ubi8
-      - CHECTL_CHANNEL=next
-      - MINIKUBE_VERSION=v1.18.1
+      env: DIST=ubi8 CHECTL_CHANNEL=next
     - <<: *happy-path
       name: happy-path (ubi8, stable)
-      env:
-      - DIST=ubi8
-      - CHECTL_CHANNEL=stable
-      - MINIKUBE_VERSION=v1.18.1
+      env: DIST=ubi8 CHECTL_CHANNEL=stable

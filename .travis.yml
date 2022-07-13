@@ -1,13 +1,25 @@
-arch:
-  - ppc64le
-  - amd64
-  - s390x
+dist: bionic
+
+language: python
+python: 3.6
 
 cache:
   directories:
-  - $HOME/cache
-  
+    - /home/travis/build/${TRAVIS_REPO_SLUG}/.travis
+
+install: skip
+
+before_script:
+  - python3 --version
+  - pip3 --cache-dir .travis install -r requirements.txt   
+  - git status
+  - ls -lh .travis/
+
 script:
-  - cat $HOME/cache/test.txt
-  - echo "cached file" >> $HOME/cache/test.txt
-  - cat $HOME/cache/test.txt 
+  - docker build -t test:latest -f Dockerfile .
+
+jobs:
+  include: 
+    - arch: ppc64le
+      python: 3.9
+    - arch: amd64

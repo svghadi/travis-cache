@@ -8,4 +8,4 @@ COPY requirements.txt requirements.txt
 
 RUN ls -lh /tmp
 
-RUN pip --cache-dir /tmp install -r requirements.txt
+RUN time pip --cache-dir /tmp install -r requirements.txt

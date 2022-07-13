@@ -11,7 +11,7 @@ install: skip
 
 before_script:
   - python3 --version
-  - pip3 --cache-dir .travis install -r requirements.txt   
+  - time pip3 --cache-dir .travis install -r requirements.txt   
   - git status
   - ls -lh .travis/
 
